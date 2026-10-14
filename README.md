@@ -4,9 +4,9 @@
 
 | 层 | 技术栈 | 状态 | 负责人 |
 |---|---|---|---|
-| 前端 | Vue 3.3 + Vite 4 + vue-router 4 + axios | ✅ 已完成 | 前端同学 |
-| 数据库 | MySQL 8，14 张表 | ✅ 已完成 | 数据库同学 |
-| **后端** | **Spring Boot 3 + MyBatis-Plus + MySQL** | ❌ **待实现** | **← 就是你** |
+| 前端 | Vue 3.3 + Vite 4 + vue-router 4 + axios | ✅ 已完成 |
+| 数据库 | MySQL 8，14 张表 | ✅ 已完成 |
+| **后端** | **Spring Boot 3 + MyBatis-Plus + MySQL** | ❌ **待实现** |
 
 > 🔴 **本仓库是公开仓库。** 不要提交任何真实密码、密钥、或个人隐私数据。
 
