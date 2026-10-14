@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ateavi.mapper.DatasetMapper">
+
+    <resultMap id="BaseResultMap" type="com.ateavi.pojo.Dataset">
+            <id property="datasetId" column="dataset_id" jdbcType="INTEGER"/>
+            <result property="datasetName" column="dataset_name" jdbcType="VARCHAR"/>
+            <result property="description" column="description" jdbcType="VARCHAR"/>
+            <result property="statusId" column="status_id" jdbcType="INTEGER"/>
+            <result property="sizeFormatted" column="size_formatted" jdbcType="VARCHAR"/>
+            <result property="fileCount" column="file_count" jdbcType="INTEGER"/>
+            <result property="userId" column="user_id" jdbcType="INTEGER"/>
+            <result property="downloadcount" column="downloadCount" jdbcType="INTEGER"/>
+            <result property="createdTime" column="created_time" jdbcType="TIMESTAMP"/>
+            <result property="updatedTime" column="updated_time" jdbcType="TIMESTAMP"/>
+            <result property="baseAddress" column="base_address" jdbcType="VARCHAR"/>
+            <result property="trueAddress" column="true_address" jdbcType="VARCHAR"/>
+            <result property="version" column="version" jdbcType="INTEGER"/>
+            <result property="isDeleted" column="is_deleted" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        dataset_id,dataset_name,description,
+        status_id,size_formatted,
+        file_count,user_id,
+        downloadCount,created_time,updated_time,
+        base_address,true_address,
+        version,is_deleted
+    </sql>
+
+    <select id="selectMyPage" resultType="map">
+        select
+        dataset.dataset_id,
+        dataset.dataset_name,
+        dataset.description,
+        status.`status`,
+        dataset.size_formatted,
+        dataset.file_count,
+        GROUP_CONCAT(t.name) AS task_names,
+        user.name,
+        dataset.downloadCount,
+        dataset.created_time,
+        dataset.updated_time,
+        dataset.true_address,
+        dataset.base_address
+        from dataset
+        left join user on dataset.user_id = user.user_id
+        left join status on dataset.status_id = status.status_id
+        left join dataset_task dt on dt.dataset_id = dataset.dataset_id
+        left join task t on t.id = dt.task_id
+        where dataset.is_deleted = 0
+        <if test="datasetListVo.search !=null and datasetListVo.search.length()>0 ">
+            and dataset.dataset_name like concat('%',#{datasetListVo.search},'%')
+        </if>
+        <if test="datasetListVo.taskId != null">
+            and exists (select 1 from dataset_task dt2 where dt2.dataset_id = dataset.dataset_id and dt2.task_id = #{datasetListVo.taskId})
+        </if>
+        group by dataset.dataset_id
+    </select>
+
+    <select id="selectDataset" resultType="datasetVo">
+        select
+        dataset.dataset_id,
+        dataset.dataset_name,
+        dataset.description,
+        status.`status`,
+        dataset.size_formatted,
+        dataset.file_count,
+        GROUP_CONCAT(t.name) AS taskNames,
+        user.name,
+        dataset.downloadCount,
+        dataset.created_time,
+        dataset.updated_time,
+        dataset.base_address,
+        dataset.true_address
+        from dataset
+        left join user on dataset.user_id = user.user_id
+        left join status on dataset.status_id = status.status_id
+        left join dataset_task dt on dt.dataset_id = dataset.dataset_id
+        left join task t on t.id = dt.task_id
+        where dataset.is_deleted = 0 and dataset.dataset_id = #{datasetId}
+        group by dataset.dataset_id
+    </select>
+
+
+</mapper>

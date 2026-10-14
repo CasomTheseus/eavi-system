@@ -1,0 +1,30 @@
+{
+  "name": "eavi-framework",
+  "version": "1.0.0",
+  "description": "EAVI团队数据管理系统",
+  "main": "index.js",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "serve": "vite preview"
+  },
+  "dependencies": {
+    "axios": "^1.4.0",
+    "highlight.js": "^11.11.1",
+    "marked": "^16.3.0",
+    "vue": "^3.3.4",
+    "vue-router": "^4.2.4"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^4.2.3",
+    "vite": "^4.4.5"
+  },
+  "keywords": [
+    "vue",
+    "eavi",
+    "data-management"
+  ],
+  "author": "EAVI Team",
+  "license": "MIT"
+}

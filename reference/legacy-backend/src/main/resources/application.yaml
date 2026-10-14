@@ -1,0 +1,55 @@
+# server配置
+server:
+  port: 8080
+  servlet:
+    context-path: /
+
+# 连接池配置
+spring:
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    druid:
+      url: jdbc:mysql:///eavi_system
+      username: root
+      password: ${MYSQL_PASSWORD:CHANGE_ME}
+      driver-class-name: com.mysql.cj.jdbc.Driver
+  
+  # 文件上传配置
+  servlet:
+    multipart:
+      max-file-size: 100MB      # 单个文件最大大小
+      max-request-size: 500MB   # 整个请求最大大小
+      enabled: true             # 启用multipart上传
+  web:
+    resources:
+          static-locations:
+            - file:e:/UI/eavi-static/
+            - classpath:/static/
+            - classpath:/public/
+
+# mybatis-plus的配置
+mybatis-plus:
+  type-aliases-package: com.ateavi.pojo
+  global-config:
+    db-config:
+      logic-delete-field: isDeleted  #全局逻辑删除
+      id-type: auto #主键策略自增长
+      table-prefix: news_ # 设置表的前缀
+
+#jwt配置
+jwt:
+  token:
+    tokenExpiration: 120 #有效时间,单位分钟
+    tokenSignKey: ${JWT_SIGN_KEY:CHANGE_ME_TO_A_RANDOM_STRING}  #当前程序签名秘钥 自定义
+
+# 自定义配置
+eavi:
+  dataset:
+    # 数据集文件存储路径（绝对路径，指向项目外部静态资源目录）
+    storage-path: e:/UI/eavi-static/data/datasets/
+    # Markdown文档路径（绝对路径，指向项目外部静态资源目录）
+    docs-path: e:/UI/eavi-static/data/docs/
+    # 静态资源路径（绝对路径，指向项目外部静态资源目录）
+    static-path: e:/UI/eavi-static/
+
+# Spring Boot静态资源配置

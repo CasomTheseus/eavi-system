@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ateavi.mapper.DatasetTaskMapper">
+
+    <resultMap id="BaseResultMap" type="com.ateavi.pojo.DatasetTask">
+            <id property="datasetId" column="dataset_id" jdbcType="INTEGER"/>
+            <id property="taskId" column="task_id" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        dataset_id,task_id
+</sql>
+
+    <select id="selectTasksByDatasetId" resultType="com.ateavi.pojo.Task">
+        select t.id, t.name
+        from dataset_task dt
+        left join task t on t.id = dt.task_id
+        where dt.dataset_id = #{datasetId}
+    </select>
+</mapper>

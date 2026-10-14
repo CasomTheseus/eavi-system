@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ateavi.mapper.PaperMapper">
+
+    <resultMap id="BaseResultMap" type="com.ateavi.pojo.Paper">
+            <id property="id" column="id" jdbcType="BIGINT"/>
+            <result property="title" column="title" jdbcType="VARCHAR"/>
+            <result property="authors" column="authors" jdbcType="VARCHAR"/>
+            <result property="venue" column="venue" jdbcType="VARCHAR"/>
+            <result property="paperAbstract" column="abstract" jdbcType="VARCHAR"/>
+            <result property="uploadTime" column="upload_time" jdbcType="TIMESTAMP"/>
+            <result property="citations" column="citations" jdbcType="INTEGER"/>
+            <result property="impact" column="impact" jdbcType="VARCHAR"/>
+            <result property="status" column="status" jdbcType="VARCHAR"/>
+            <result property="paperUrl" column="paper_url" jdbcType="VARCHAR"/>
+            <result property="noteUrl" column="note_url" jdbcType="VARCHAR"/>
+            <result property="createdAt" column="created_at" jdbcType="TIMESTAMP"/>
+            <result property="updatedAt" column="updated_at" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,title,authors,
+        venue,abstract,upload_time,
+        citations,impact,status,
+        paper_url,note_url,created_at,
+        updated_at
+    </sql>
+
+    <select id="selectPaperDetail" resultType="map">
+        SELECT 
+        id AS id,
+        title,
+        authors,
+        venue,
+        abstract AS paperAbstract,
+        upload_time AS uploadTime,
+        citations,
+        impact,
+        status,
+        paper_url AS paperUrl,
+        note_url AS noteUrl
+        FROM paper WHERE id = #{id}
+    </select>
+
+    <select id="selectPaperDatasets" resultType="map">
+        SELECT d.dataset_id AS datasetId,
+               d.dataset_name AS datasetName,
+               d.description,
+               NULL AS datasetUrl,
+               (SELECT GROUP_CONCAT(t.name SEPARATOR ',')
+                FROM dataset_task dt
+                LEFT JOIN task t ON dt.task_id = t.id
+                WHERE dt.dataset_id = d.dataset_id) AS tags
+        FROM paper_dataset pd
+        JOIN dataset d ON pd.dataset_id = d.dataset_id
+        WHERE pd.paper_id = #{id}
+        UNION ALL
+        SELECT NULL AS datasetId,
+               COALESCE(pd.display_name, pd.dataset_url) AS datasetName,
+               NULL AS description,
+               pd.dataset_url AS datasetUrl,
+               NULL AS tags
+        FROM paper_dataset pd
+        WHERE pd.paper_id = #{id} AND pd.dataset_url IS NOT NULL AND (pd.dataset_id IS NULL OR pd.dataset_id = 0)
+        ORDER BY datasetName ASC
+    </select>
+
+    <select id="selectPaperCodes" resultType="map">
+        SELECT code_name AS name, code_url AS url
+        FROM paper_code
+        WHERE paper_id = #{id}
+    </select>
+
+    <select id="selectPaperTasks" resultType="string">
+        SELECT t.name
+        FROM paper_task pt
+        JOIN task t ON pt.task_id = t.id
+        WHERE pt.paper_id = #{id}
+    </select>
+
+    <select id="selectPaperResults" resultType="map">
+        SELECT r.id AS id,
+               t.name AS task,
+               d.dataset_name AS dataset,
+               r.metric_name AS metric,
+               r.metric_value AS value,
+               r.is_sota AS isSota
+        FROM result r
+        JOIN task t ON r.task_id = t.id
+        JOIN dataset d ON r.dataset_id = d.dataset_id
+        WHERE r.paper_id = #{id}
+        ORDER BY r.is_sota DESC, r.id ASC
+    </select>
+</mapper>

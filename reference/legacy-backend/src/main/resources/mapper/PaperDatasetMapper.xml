@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ateavi.mapper.PaperDatasetMapper">
+
+    <resultMap id="BaseResultMap" type="com.ateavi.pojo.PaperDataset">
+            <id property="paperId" column="paper_id" jdbcType="BIGINT"/>
+            <id property="datasetId" column="dataset_id" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        paper_id,dataset_id
+    </sql>
+</mapper>

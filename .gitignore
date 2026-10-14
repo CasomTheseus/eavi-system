@@ -1,0 +1,61 @@
+# ============================================================
+# EAVI 团队数据管理系统 —— 版本库忽略规则
+# 团队环境：macOS（前端/数据库）+ Windows（后端）
+# ============================================================
+
+# ---------- 依赖与构建产物 ----------
+# 注意：绝不要提交 node_modules/。
+# 它含有平台专用二进制（esbuild 的 @esbuild/win32-x64 等），
+# 在 macOS 装好后拷到 Windows 会直接跑不起来。各人自己 npm install。
+node_modules/
+dist/
+build/
+target/
+*.jar
+*.war
+*.class
+
+# ---------- IDE / 编辑器 ----------
+.idea/
+*.iml
+*.ipr
+*.iws
+.vscode/
+.settings/
+.project
+.classpath
+*.swp
+*~
+
+# ---------- 操作系统 ----------
+# macOS
+.DS_Store
+._*
+.Spotlight-V100
+.Trashes
+# Windows
+Thumbs.db
+ehthumbs.db
+desktop.ini
+$RECYCLE.BIN/
+
+# ---------- 日志 ----------
+*.log
+logs/
+npm-debug.log*
+yarn-error.log*
+
+# ---------- 本地配置（含数据库密码等，绝不入库）----------
+# 真实密码请只写在本机的 application-local.yaml，或走环境变量
+application-local.yaml
+application-local.yml
+application-local.properties
+.env
+.env.local
+.env.*.local
+
+# ---------- 大文件 / 临时 ----------
+*.zip
+*.tar.gz
+tmp/
+temp/

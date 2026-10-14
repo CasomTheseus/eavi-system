@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ateavi.mapper.PaperCodeMapper">
+
+    <resultMap id="BaseResultMap" type="com.ateavi.pojo.PaperCode">
+            <id property="paperId" column="paper_id" jdbcType="INTEGER"/>
+            <result property="codeUrl" column="code_url" jdbcType="VARCHAR"/>
+            <result property="codeName" column="code_name" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        paper_id,code_url,code_name
+    </sql>
+</mapper>

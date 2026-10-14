@@ -1,0 +1,28 @@
+root = true
+
+# 团队混合环境：macOS + Windows
+# 编辑器装了 EditorConfig 插件后会自动遵循这里，避免各自 IDE 默认值打架。
+
+[*]
+charset = utf-8
+end_of_line = lf
+insert_final_newline = true
+trim_trailing_whitespace = true
+indent_style = space
+indent_size = 2
+
+[*.{java,xml}]
+indent_size = 4
+
+[*.{ps1,psm1,bat,cmd}]
+end_of_line = crlf
+
+[*.md]
+# Markdown 里行尾两个空格是"强制换行"语法，不能删
+trim_trailing_whitespace = false
+
+[*.sql]
+indent_size = 2
+
+[Makefile]
+indent_style = tab

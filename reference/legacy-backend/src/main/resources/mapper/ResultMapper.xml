@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ateavi.mapper.ResultMapper">
+
+    <resultMap id="BaseResultMap" type="com.ateavi.pojo.Result">
+            <id property="id" column="id" jdbcType="BIGINT"/>
+            <result property="paperId" column="paper_id" jdbcType="BIGINT"/>
+            <result property="taskId" column="task_id" jdbcType="BIGINT"/>
+            <result property="datasetId" column="dataset_id" jdbcType="INTEGER"/>
+            <result property="modelName" column="model_name" jdbcType="VARCHAR"/>
+            <result property="metricName" column="metric_name" jdbcType="VARCHAR"/>
+            <result property="metricValue" column="metric_value" jdbcType="VARCHAR"/>
+            <result property="isSota" column="is_sota" jdbcType="TINYINT"/>
+            <result property="createdAt" column="created_at" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,paper_id,task_id,
+        dataset_id,model_name,metric_name,
+        metric_value,is_sota,created_at
+    </sql>
+</mapper>

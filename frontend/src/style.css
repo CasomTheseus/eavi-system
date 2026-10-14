@@ -1,0 +1,8 @@
+/* 引入全局样式 */
+@import './styles/global.css';
+
+/* Vue 应用特定样式 */
+#app {
+  width: 100%;
+  min-height: 100vh;
+}
